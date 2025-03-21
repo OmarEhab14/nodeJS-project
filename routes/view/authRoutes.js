@@ -58,6 +58,7 @@ router.post('/login', async (req, res) => {
     req.session.user = user
     res.redirect('/home');
 })
+
 router.get('/logout', (req, res) => {
     req.session.destroy()
     res.redirect('/login')
