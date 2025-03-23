@@ -1,0 +1,107 @@
+body {
+  background-color: #121212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.register-card {
+  background: #1e1e1e;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 350px;
+}
+
+.logo {
+  font-family: "Aref Ruqaa", Arial, sans-serif;
+  font-size: 32px;
+  font-weight: bold;
+  color: #ffffff;
+  text-decoration: none;
+  direction: rtl;
+}
+
+h2 {
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  color: #ccc;
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #333;
+  color: #fff;
+}
+
+.register-btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #ff3b3b;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.divider {
+  margin: 15px 0;
+  color: #ccc;
+  font-size: 14px;
+}
+
+.google-register {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #000;
+  color: #fff;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.google-register img {
+  width: 20px;
+}
+
+.login-text {
+  margin-top: 10px;
+  color: #ccc;
+  font-size: 14px;
+}
+
+.login-text a {
+  color: #ff6b6b;
+  text-decoration: none;
+}
