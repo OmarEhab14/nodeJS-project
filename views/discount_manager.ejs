@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Discount Manager</title>
+    <link rel="stylesheet" href="/css/discountStyle.css">
+</head>
+
+<body>
+    <div class="nav-bar">
+        <h1>DISCOUNT MANAGER</h1>
+        <h1>
+            <%= user.username%>
+        </h1>
+    </div>
+
+    <div class="discount-container">
+        <% products.forEach(product=> { %>
+            <div class="product-row">
+                <img src="<%= product.image %>" alt="Product Image" class="product-image">
+
+                <div class="product-details">
+                    <h3 class="product-title">
+                        <%= product.title %>
+                    </h3>
+                    <% if (product.discount > 0) { %>
+                        <p class="product-discount">Discount: <%= product.discount %>%</p>
+                        <p class="product-price">
+                          <s><%= product.price %></s>
+                          <strong>
+                            <%= (product.price * (1 - product.discount / 100)).toFixed(2) %> EGP
+                          </strong>
+                        </p>
+                      <% } else { %>
+                        <p class="product-price"><%= product.price %> EGP</p>
+                      <% } %>
+                    <!-- <p class="product-price">Price: <%= product.price %> EGP</p> -->
+
+                    <div class="discount-input">
+                        <form action="/api/discount/apply-discount" method="post">
+                            <input type="hidden" value="<%= product._id %>" name="id">
+                            <input type="number" placeholder="Discount %" min="0" max="100" name="discount">
+                            <button class="apply-btn" type="submit">Apply</button>
+                        </form>
+                        <form action="/api/discount/remove-discount" method="post">
+                            <input type="hidden" value="<%= product._id %>" name="id">
+                            <button class="remove-btn" type="submit">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+    </div>
+</body>
+
+</html>

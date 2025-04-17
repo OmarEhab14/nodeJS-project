@@ -1,4 +1,5 @@
 const db = require("mongoose");
+
 const product = db.Schema({
   title: {
     type: String,
@@ -20,6 +21,10 @@ const product = db.Schema({
     type: String,
     required: true,
   },
+  discount: {
+    type: Number,
+    default: 0
+  }
 });
 
 module.exports = db.model("product", product);

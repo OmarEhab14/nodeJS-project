@@ -9,6 +9,7 @@ router.post('/', (req, res) => {
         category: req.body.category,
         price: req.body.price,
         image: req.body.image,
+        discount: req.body.discount,
     });
     newProduct.save().then(res.json(newProduct))
 })

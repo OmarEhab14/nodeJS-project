@@ -12,7 +12,12 @@ const user = db.Schema({
     password: {
         type: String,
         required: true,
-    }
+    },
+    isAdmin: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
 });
 
 module.exports = db.model('user', user);

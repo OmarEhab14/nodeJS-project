@@ -35,4 +35,7 @@ app.use("/api/products", require("./routes/productsApi/deleteRoutes"));
 app.use("/", require("./routes/view/authRoutes"));
 app.use("/", require("./routes/view/viewRoutes"));
 
+app.use("/api/discount", require("./routes/discountApi/applyDiscount"));
+app.use("/api/discount", require("./routes/discountApi/removeDiscount"));
+
 app.listen(4000);

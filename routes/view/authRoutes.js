@@ -5,7 +5,7 @@ const users = require("../../users");
 
 router.post("/register", async (req, res) => {
   // console.log(req.body)
-  const { username, email, password } = req.body;
+  const { username, email, password, isAdmin } = req.body;
 
   console.log(username);
   console.log(email);
@@ -32,6 +32,7 @@ router.post("/register", async (req, res) => {
     username: username,
     email: email,
     password: hashedPassword,
+    isAdmin: isAdmin
   });
 
   // console.log(hashedPassword)

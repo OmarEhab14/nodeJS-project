@@ -2,10 +2,15 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Product = require("../../products");
+const products = require("../../products");
 
 router.get("/home", async (req, res) => {
   if (!req.session.user) {
     return res.redirect("/login");
+  }
+
+  if (req.session.user.isAdmin == true) {
+    return res.redirect("/discount");
   }
 
   try {
@@ -28,5 +33,13 @@ router.get("/login", (req, res) => {
 router.get("/register", (req, res) => {
   res.render("../views/register.ejs");
 });
+
+router.get("/discount", async (req, res) => {
+  const products = await Product.find({});
+  res.render("../views/discount_manager.ejs", {
+    user: req.session.user,
+    products: products,
+  });
+})
 
 module.exports = router;

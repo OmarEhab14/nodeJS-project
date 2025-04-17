@@ -1,0 +1,99 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .nav-bar {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .discount-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* max-width: 900px; */
+    width: 90%;
+    margin: 0 auto;
+  }
+  
+  .product-discount {
+    color: #ff3b3b;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .product-row {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 15px;
+    gap: 20px;
+    height: 170px;
+  }
+
+  .product-image {
+    width: 120px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .product-details {
+    flex: 1;
+  }
+
+  .product-title {
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+
+  .product-price {
+    color: #555;
+  }
+
+  .discount-input {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  input[type="number"] {
+    width: 200px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .apply-btn {
+    padding: 5px 12px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .apply-btn:hover {
+    background-color: #45a049;
+  }
+
+  .remove-btn {
+    padding: 5px 12px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .remove-btn:hover {
+    background-color: #d32f2f;
+  }
