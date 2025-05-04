@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Discount Manager</title>
-    <link rel="stylesheet" href="/css/discountStyle.css">
+    <link rel="stylesheet" href="./css/discountStyle.css">
 </head>
 
 <body>
@@ -38,12 +38,12 @@
                     <!-- <p class="product-price">Price: <%= product.price %> EGP</p> -->
 
                     <div class="discount-input">
-                        <form action="/api/discount/apply-discount" method="post">
+                        <form action="/api/discount" method="post">
                             <input type="hidden" value="<%= product._id %>" name="id">
                             <input type="number" placeholder="Discount %" min="0" max="100" name="discount">
                             <button class="apply-btn" type="submit">Apply</button>
                         </form>
-                        <form action="/api/discount/remove-discount" method="post">
+                        <form action="/api/discount" method="post">
                             <input type="hidden" value="<%= product._id %>" name="id">
                             <button class="remove-btn" type="submit">Remove</button>
                         </form>
