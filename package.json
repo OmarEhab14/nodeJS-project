@@ -4,7 +4,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "jest product --watch-all --detectOpenHandles"
+    "test": "jest product user discount --coverage"
   },
   "author": "Omar Ehab",
   "license": "ISC",

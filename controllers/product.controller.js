@@ -28,8 +28,10 @@ const createProduct = async (req, res) => {
             price: req.body.price,
             image: req.body.image,
             discount: req.body.discount,
+            isTest: req.body.isTest,
         });
-        newProduct.save().then(res.status(200).json(newProduct))
+        await newProduct.save()
+        res.status(200).json(newProduct)
     } catch (error) {
         res.status(500).json(error)
     }
@@ -38,7 +40,7 @@ const createProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
     try {
         const productId = req.params.id
-        const product = await Products.updateOne({
+        const product = await Products.findByIdAndUpdate({ //replaced update one with findByIdAndUpdate to return the json object after finishing
             _id: productId,
         }, {
             $set: {
@@ -49,7 +51,9 @@ const updateProduct = async (req, res) => {
                 image: req.body.image,
                 discount: req.body.discount,
             }
-        });
+        },
+            { new: true }, // added this to return the new object after updating, not the old one.
+        );
         res.status(200).json(product);
     } catch (error) {
         res.status(500).json(error);

@@ -1,9 +1,11 @@
 const Products = require('../models/product.model')
 
 const discount = async (req, res) => {
-    const { id, discount } = req.body
+    var { id, discount } = req.body
+    console.log(discount)
     if(!discount) {
         discount = 0
+        console.log(discount)
     }
     try {
         const product = await Products.updateOne({

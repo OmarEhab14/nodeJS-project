@@ -26,8 +26,10 @@ const createUser = async (req, res) => {
             email: req.body.email,
             password: req.body.password,
             isAdmin: req.body.isAdmin,
+            isTest: req.body.isTest,
         });
-        newUser.save().then(res.status(200).json(newUser))
+        await newUser.save()
+        res.status(200).json(newUser)
     } catch (error) {
         res.status(500).json(error)
     }
@@ -36,14 +38,27 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
     try {
         const userId = req.params.id;
+        const { username, email, password, isAdmin } = req.body;
         const updateFields = {};
 
         // Not to overwrite the contents of the fields in the database
-        if (req.body.username) updateFields.username = req.body.username;
-        if (req.body.email) updateFields.email = req.body.email;
-        if (req.body.password) updateFields.password = req.body.password;
-        if (typeof req.body.isAdmin === "boolean") updateFields.isAdmin = req.body.isAdmin;
-        const user = await Users.updateOne({ _id: userId }, { $set: updateFields });
+        // if (req.body.username) updateFields.username = req.body.username;
+        // if (req.body.email) updateFields.email = req.body.email;
+        // if (req.body.password) updateFields.password = req.body.password;
+        // if (typeof req.body.isAdmin === "boolean") updateFields.isAdmin = req.body.isAdmin;
+        if (username !== undefined) {
+            updateFields.username = username;
+        }
+        if (email !== undefined) {
+            updateFields.email = email;
+        }
+        if (password !== undefined) {
+            updateFields.password = password;
+        }
+        if (typeof isAdmin === 'boolean') {
+            updateFields.isAdmin = isAdmin;
+        }
+        const user = await Users.findByIdAndUpdate({ _id: userId }, { $set: updateFields }, {new: true});
         res.status(200).json(user);
     } catch (error) {
         res.status(500).json(error)

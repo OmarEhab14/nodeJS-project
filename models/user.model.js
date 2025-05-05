@@ -1,6 +1,6 @@
 const db = require('mongoose')
 const user = db.Schema({
-    username :{
+    username: {
         type: String,
         required: true,
     },
@@ -15,7 +15,12 @@ const user = db.Schema({
     },
     isAdmin: {
         type: Boolean,
-        required: true,
+        required: false,
+        default: false,
+    },
+    isTest: {
+        type: Boolean,
+        required: false,
         default: false,
     },
 });
