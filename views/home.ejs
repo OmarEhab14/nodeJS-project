@@ -26,12 +26,12 @@
           class="product-image"
         />
         <h3 class="product-title"><%= product.title %></h3>
-        <% if (product.discount > 0) { %>
+        <% if (showDiscount(product.discount)) { %>
           <p class="product-discount">Discount: <%= product.discount %>%</p>
           <p class="product-price">
             <s><%= product.price %></s>
             <strong>
-              <%= (product.price * (1 - product.discount / 100)).toFixed(2) %> EGP
+              <%= calculateNewPrice(product.price, product.discount) %> EGP
             </strong>
           </p>
         <% } else { %>

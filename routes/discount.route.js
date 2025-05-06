@@ -6,6 +6,6 @@ const {
 
 const router = express.Router();
 
-router.put('/discount', discount);
+router.post('/discount', discount);
 
 module.exports = router;

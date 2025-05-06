@@ -1,4 +1,5 @@
 const Product = require("../models/product.model");
+const { showDiscount, calculateNewPrice } = require('../helpers/discount');
 
 const homePage = async (req, res) => {
   if (!req.session.user) {
@@ -15,6 +16,8 @@ const homePage = async (req, res) => {
     res.render("../views/home.ejs", {
       user: req.session.user,
       products: products,
+      showDiscount,
+      calculateNewPrice,
     });
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -35,12 +38,14 @@ const discountPage = async (req, res) => {
   res.render("../views/discount_manager.ejs", {
     user: req.session.user,
     products: products,
+    showDiscount,
+    calculateNewPrice,
   });
 };
 
 module.exports = {
-    homePage,
-    loginPage,
-    registerPage,
-    discountPage,
+  homePage,
+  loginPage,
+  registerPage,
+  discountPage,
 }
