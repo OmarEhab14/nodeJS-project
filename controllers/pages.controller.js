@@ -20,7 +20,6 @@ const homePage = async (req, res) => {
       calculateNewPrice,
     });
   } catch (error) {
-    console.error("Error fetching products:", error);
     res.status(500).send("Error retrieving products");
   }
 };
@@ -34,6 +33,9 @@ const registerPage = (req, res) => {
 };
 
 const discountPage = async (req, res) => {
+  if (!req.session.user || !req.session.user.isAdmin) {
+    return res.redirect('/home');
+  }
   const products = await Product.find({});
   res.render("../views/discount_manager.ejs", {
     user: req.session.user,

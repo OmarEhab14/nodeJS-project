@@ -12,6 +12,7 @@ const register = async (req, res) => {
         password,
         confirmPassword,
         isAdmin,
+        isTest,
     } = req.body;
 
     if (!firstName || !lastName || !mobile || !gender || !username || !email || !password || !confirmPassword) {
@@ -46,7 +47,8 @@ const register = async (req, res) => {
         username: username,
         email: email,
         password: hashedPassword,
-        isAdmin: isAdmin || false
+        isAdmin: isAdmin,
+        isTest: isTest,
     });
 
     await newUser.save();
@@ -58,10 +60,18 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await Users.findOne({ email: email });
+    // console.log(user.username);
+    if (!user) {
+        return res.status(400).json({
+            status: "failure",
+            message: "Invalid email or password",
+        });
+    }
+
     const correctPassword = await bcrypt.compare(password, user.password);
-    console.log(user.username);
-    if (!user || !correctPassword) {
-        res.status(400).json({
+    
+    if (!correctPassword) {
+        return res.status(400).json({
             status: "failure",
             message: "Invalid email or password",
         });

@@ -18,7 +18,7 @@
 
     <div class="discount-container">
         <% products.forEach(product=> { %>
-            <div class="product-row">
+            <div class="product-row" id="product-<%= product._id %>">
                 <img src="<%= product.image %>" alt="Product Image" class="product-image">
 
                 <div class="product-details">

@@ -150,3 +150,7 @@ input[type="number"] {
 .remove-btn:hover {
   background-color: #d32f2f;
 }
+
+html {
+  scroll-behavior: smooth;
+}

@@ -15,7 +15,8 @@ const discount = async (req, res) => {
                 discount: discount,
             }
         });
-        res.redirect('back')
+        // res.redirect('back')
+        res.redirect(`/discount#product-${id}`);
     } catch (e) {
         res.status(500).json({ error: e.message });
     }

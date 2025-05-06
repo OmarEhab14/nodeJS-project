@@ -4,7 +4,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "jest product user discount --coverage"
+    "test": "jest product user discount authentication pages --coverage"
   },
   "author": "Omar Ehab",
   "license": "ISC",
