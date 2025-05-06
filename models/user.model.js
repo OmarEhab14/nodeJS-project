@@ -1,5 +1,22 @@
-const db = require('mongoose')
+const db = require('mongoose');
 const user = db.Schema({
+    firstName: {
+        type: String,
+        required: true,
+    },
+    lastName: {
+        type: String,
+        required: true,
+    },
+    mobile: {
+        type: String,
+        required: true,
+    },
+    gender: {
+        type: String,
+        enum: ['male', 'female'],
+        required: true,
+    },
     username: {
         type: String,
         required: true,
