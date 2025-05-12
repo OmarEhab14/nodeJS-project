@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Discount Manager</title>
-    <link rel="stylesheet" href="./css/discountStyle.css">
+    <link rel="stylesheet" href="./css/discountStyle.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css "
@@ -15,8 +15,12 @@
     <div class="navbar">
       <h1 class="logo"><i class="fas fa-percent"></i> Discount Manager</h1>
       <div class="user">
-        <span class="username"><i class="fas fa-user-circle"></i> <%= user.username %></span>
-        <a href="/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <span class="username"
+          ><i class="fas fa-user-circle"></i> <%= user.username %></span
+        >
+        <a href="/logout" class="logout-btn"
+          ><i class="fas fa-sign-out-alt"></i> Logout</a
+        >
       </div>
     </div>
 
@@ -32,7 +36,9 @@
         <div class="product-details">
           <h3 class="product-title"><%= product.title %></h3>
           <% if (showDiscount(product.discount)) { %>
-          <p class="product-discount"><i class="fas fa-tag"></i> <%= product.discount %>% OFF</p>
+          <p class="product-discount">
+            <i class="fas fa-tag"></i> <%= product.discount %>% OFF
+          </p>
           <p class="product-price">
             <s><%= product.price %></s>
             <strong>
@@ -45,7 +51,7 @@
 
           <div class="discount-input">
             <form action="/api/discount" method="post">
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
               <input type="hidden" value="<%= product._id %>" name="id" />
               <input
                 type="number"
@@ -54,23 +60,26 @@
                 max="100"
                 name="discount"
               />
-              <button class="apply-btn" type="submit"><i class="fas fa-check"></i> Apply</button>
+              <button class="apply-btn" type="submit">
+                <i class="fas fa-check"></i> Apply
+              </button>
             </form>
             <form action="/api/discount" method="post">
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
               <input type="hidden" value="<%= product._id %>" name="id" />
-              <button class="remove-btn" type="submit"><i class="fas fa-times"></i> Remove</button>
+              <button class="remove-btn" type="submit">
+                <i class="fas fa-times"></i> Remove
+              </button>
             </form>
           </div>
         </div>
         <form
           id="edit-form-<%= product._id %>"
-          class="edit-form-row"
+          class="edit-form-row hidden"
           action="/api/products/<%= product._id %>?_method=PUT"
           method="POST"
-          style="display: none"
         >
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
           <div>
             <label for="title-<%= product._id %>">Product Title</label>
             <input
@@ -83,7 +92,13 @@
           </div>
           <div>
             <label for="description-<%= product._id %>">Description</label>
-            <textarea name="description" id="description-<%= product._id %>" required><%= product.description %></textarea>
+            <textarea
+              name="description"
+              id="description-<%= product._id %>"
+              required
+            >
+<%= product.description %></textarea
+            >
           </div>
           <div>
             <label for="category-<%= product._id %>">Category</label>
@@ -126,7 +141,9 @@
             />
           </div>
           <div class="edit-form-buttons">
-            <button type="submit" class="save-btn"><i class="fas fa-save"></i> Save Changes</button>
+            <button type="submit" class="save-btn">
+              <i class="fas fa-save"></i> Save Changes
+            </button>
             <button
               type="button"
               class="cancel-btn"
@@ -136,20 +153,20 @@
             </button>
           </div>
         </form>
-        
+
         <div class="remove-product">
-          <form action="/api/products/<%= product._id %>?_method=DELETE" method="POST">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <form
+            action="/api/products/<%= product._id %>?_method=DELETE"
+            method="POST"
+          >
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
             <button type="submit" title="Delete Product">
               <i class="fa-solid fa-trash"></i>
             </button>
           </form>
         </div>
-        <div class="edit-section" style="border-left: 1px solid var(--border-color); padding-left: 15px; margin-left: 10px;">
-          <button
-            class="edit-btn"
-            onclick="toggleEditForm('<%= product._id %>')"
-          >
+        <div class="edit-section">
+          <button class="edit-btn" data-product-id="<%= product._id %>">
             <i class="fas fa-edit"></i> Edit
           </button>
         </div>
@@ -157,20 +174,6 @@
       <% }); %>
     </div>
 
-    <script>
-      function toggleEditForm(productId) {
-        const productRow = document.getElementById(`product-${productId}`);
-        const productDetails = productRow.querySelector('.product-details');
-        const editForm = document.getElementById(`edit-form-${productId}`);
-        
-        if (editForm.style.display === 'none' || !editForm.style.display) {
-          productDetails.style.display = 'none';
-          editForm.style.display = 'flex';
-        } else {
-          productDetails.style.display = 'flex';
-          editForm.style.display = 'none';
-        }
-      }
-    </script>
+    <script src="./javascript/discount_manager.js"></script>
   </body>
 </html>
