@@ -27,11 +27,11 @@ const homePage = async (req, res) => {
 };
 
 const loginPage = (req, res) => {
-  res.render("../views/login.ejs");
+  res.render("../views/login.ejs",  { csrfToken: req.csrfToken() });
 };
 
 const registerPage = (req, res) => {
-  res.render("../views/register.ejs");
+  res.render("../views/register.ejs",  { csrfToken: req.csrfToken() });
 };
 
 const discountPage = async (req, res) => {
@@ -44,6 +44,7 @@ const discountPage = async (req, res) => {
     products: products,
     showDiscount,
     calculateNewPrice,
+    csrfToken: req.csrfToken()
   });
 };
 

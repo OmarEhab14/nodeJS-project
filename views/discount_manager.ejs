@@ -45,6 +45,7 @@
 
           <div class="discount-input">
             <form action="/api/discount" method="post">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               <input type="hidden" value="<%= product._id %>" name="id" />
               <input
                 type="number"
@@ -56,6 +57,7 @@
               <button class="apply-btn" type="submit"><i class="fas fa-check"></i> Apply</button>
             </form>
             <form action="/api/discount" method="post">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               <input type="hidden" value="<%= product._id %>" name="id" />
               <button class="remove-btn" type="submit"><i class="fas fa-times"></i> Remove</button>
             </form>
@@ -68,6 +70,7 @@
           method="POST"
           style="display: none"
         >
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <div>
             <label for="title-<%= product._id %>">Product Title</label>
             <input
@@ -136,6 +139,7 @@
         
         <div class="remove-product">
           <form action="/api/products/<%= product._id %>?_method=DELETE" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button type="submit" title="Delete Product">
               <i class="fa-solid fa-trash"></i>
             </button>

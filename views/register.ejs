@@ -11,6 +11,7 @@
   <body>
     <div class="register-container">
       <form class="register-card" action="/register" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <h1 class="logo">بالعربي</h1>
         <h2>Create Your Account</h2>
 
