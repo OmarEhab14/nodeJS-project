@@ -4,9 +4,11 @@ const userModel = require('../models/user.model')
 const request = require('supertest')
 
 require('dotenv').config()
-
+let token;
 beforeEach(async () => {
     await mongoose.connect(process.env.connect_DB)
+    const res = await request(app).get('/test-token');
+    token = res.body.csrfToken;
 })
 
 afterAll(async () => {
@@ -17,6 +19,7 @@ afterAll(async () => {
 describe('register', () => {
     it('should register a new user', async () => {
         const res = await request(app).post('/register').send({
+            _csrf: token,
             firstName: "Karim",
             lastName: "Mostafa",
             mobile: "01011122233",

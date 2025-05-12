@@ -7,6 +7,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".cancel-btn").forEach(button => {
+        button.addEventListener("click", function () {
+            const productId = this.getAttribute("data-product-id");
+            toggleEditForm(productId);
+        });
+    });
+});
+
 function toggleEditForm(productId) {
     const productRow = document.getElementById(`product-${productId}`);
     const productDetails = productRow.querySelector(".product-details");

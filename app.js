@@ -7,10 +7,10 @@ const discountRoutes = require('./routes/discount.route');
 const authRoutes = require('./routes/authentication.route');
 const pageRoutes = require('./routes/pages.route');
 const methodOverride = require('method-override');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser') // to read csrf tokens
 const csrf = require('csurf')
 const helmet = require("helmet");
-
+require('dotenv').config();
 
 app.use(methodOverride('_method'));
 
@@ -46,14 +46,15 @@ app.use(
       connectSrc: ["'self'"],
       objectSrc: ["'none'"],
       
-      frameAncestors: ["'none'"],     // Prevents embedding in iframes (anti-clickjacking)
-      formAction: ["'self'"],         // Only allow form submissions to same origin
-      baseUri: ["'self'"],            // Limits <base href="...">
+      // Corrected directive names:
+      'frame-ancestors': ["'none'"],     // Prevents embedding in iframes (anti-clickjacking)
+      'form-action': ["'self'"],         // Only allow form submissions to same origin
+      'base-uri': ["'self'"],            // Limits <base href="...">
 
-      frameSrc: ["'none'"],           // Controls what can be loaded in iframes
-      workerSrc: ["'none'"],          // Web Workers (Service Workers, etc.)
-      manifestSrc: ["'self'"],        // Web app manifests
-      childSrc: ["'none'"],           // Deprecated but still used by some browsers
+      'frame-src': ["'none'"],           // Controls what can be loaded in iframes
+      'worker-src': ["'none'"],          // Web Workers (Service Workers, etc.)
+      'manifest-src': ["'self'"],        // Web app manifests
+      'child-src': ["'none'"],           // Deprecated but still used by some browsers
 
       upgradeInsecureRequests: [],    // Forces HTTPS connections
       blockAllMixedContent: [],       // Prevent loading HTTP assets on HTTPS pages
@@ -69,7 +70,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
-    secret: "secret_key",
+    secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -90,6 +91,11 @@ app.use((req, res, next) => {
     return csrfProtection(req, res, next);
   }
 });
+
+app.get('/test-token', (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });
+});
+
 // app.use("/api/users", require("./routes/usersApi/getRoutes"));
 // app.use("/api/users", require("./routes/usersApi/postRoutes"));
 // app.use("/api/users", require("./routes/usersApi/putRoutes"));
