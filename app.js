@@ -6,6 +6,9 @@ const userRoutes = require('./routes/user.route');
 const discountRoutes = require('./routes/discount.route');
 const authRoutes = require('./routes/authentication.route');
 const pageRoutes = require('./routes/pages.route');
+const methodOverride = require('method-override');
+
+app.use(methodOverride('_method'));
 
 app.set("view-engine", "ejs");
 app.use(express.static("views"));

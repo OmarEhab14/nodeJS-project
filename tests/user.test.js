@@ -110,7 +110,8 @@ describe('update a user', () => {
         const res = await request(app).put(`/api/users/${user._id}`).send({
             firstName: "Kareem",
         });
-    
+        console.log(res.status)
+        console.log(res.body)
         expect(res.status).toBe(200);
         expect(res.body.firstName).toBe("Kareem");
         expect(res.body.username).toBe("Karim");

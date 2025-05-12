@@ -66,10 +66,11 @@ const updateUser = async (req, res) => {
         if (typeof isAdmin === 'boolean') updateFields.isAdmin = isAdmin;
 
         const user = await Users.findByIdAndUpdate(
-            { _id: userId },
+            userId,
             { $set: updateFields },
             { new: true }
         );
+
         res.status(200).json(user);
     } catch (error) {
         res.status(500).json(error);

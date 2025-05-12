@@ -1,5 +1,6 @@
 const Product = require("../models/product.model");
 const { showDiscount, calculateNewPrice } = require('../helpers/discount');
+const {formatProductTitle} = require('../helpers/home')
 
 const homePage = async (req, res) => {
   if (!req.session.user) {
@@ -18,6 +19,7 @@ const homePage = async (req, res) => {
       products: products,
       showDiscount,
       calculateNewPrice,
+      formatProductTitle,
     });
   } catch (error) {
     res.status(500).send("Error retrieving products");

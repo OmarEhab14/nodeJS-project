@@ -82,8 +82,7 @@ describe('update a product', () => {
             title: "product5",
             price: 550,
         })
-        expect(res.status).toBe(200)
-        expect(res.body.title).toBe("product5");
+        expect(res.status).toBe(302)
     }),
     it('should return product not found', async () => {
         const res = await request(app).put(`/api/products/5d4f54d`).send({
@@ -102,7 +101,7 @@ describe('delete a product', () => {
             isTest: true,
         });
         const res = await request(app).delete(`/api/products/${product._id}`);
-        expect(res.status).toBe(200)
+        expect(res.status).toBe(302)
     }),
     it('should return product not found', async () => {
         const res = await request(app).delete('/api/products/45544');

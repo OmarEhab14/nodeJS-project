@@ -46,7 +46,13 @@ describe('displaying discount', () => {
     it ('should return false when there is no discount', () => {
         expect(showDiscount(0)).toBeFalsy();
     })
+})
+
+describe('calculating discount', () => {
     it ('should return 80.00 when the discount is 20 and the price is 100', () => {
         expect(calculateNewPrice(100, 20)).toBe("80.00");
+    }),
+    it('should throw an error if the price was a negative number', () => {
+        expect(() => calculateNewPrice(-20, 20)).toThrow()
     })
 })
