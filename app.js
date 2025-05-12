@@ -9,12 +9,59 @@ const pageRoutes = require('./routes/pages.route');
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser')
 const csrf = require('csurf')
+const helmet = require("helmet");
 
 
 app.use(methodOverride('_method'));
 
 app.use(cookieParser());
 const csrfProtection = csrf({ cookie: false }); // false because it's a session and not a cookie
+
+app.use(helmet()); // provides security headers
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: [
+        "'self'",
+        "https://cdnjs.cloudflare.com",
+        "https://kit.fontawesome.com"
+      ],
+      styleSrc: [
+        "'self'",
+        "https://fonts.googleapis.com",
+        "https://cdnjs.cloudflare.com"
+      ],
+      fontSrc: [
+        "'self'",
+        "https://fonts.gstatic.com",
+        "https://cdnjs.cloudflare.com"
+      ],
+      imgSrc: [
+        "'self'",
+        "data:",
+        "https://f.nooncdn.com",
+      ],
+      connectSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      
+      frameAncestors: ["'none'"],     // Prevents embedding in iframes (anti-clickjacking)
+      formAction: ["'self'"],         // Only allow form submissions to same origin
+      baseUri: ["'self'"],            // Limits <base href="...">
+
+      frameSrc: ["'none'"],           // Controls what can be loaded in iframes
+      workerSrc: ["'none'"],          // Web Workers (Service Workers, etc.)
+      manifestSrc: ["'self'"],        // Web app manifests
+      childSrc: ["'none'"],           // Deprecated but still used by some browsers
+
+      upgradeInsecureRequests: [],    // Forces HTTPS connections
+      blockAllMixedContent: [],       // Prevent loading HTTP assets on HTTPS pages
+    },
+    reportOnly: false
+  })
+);
+
 
 app.set("view-engine", "ejs");
 app.use(express.static("views"));
@@ -25,7 +72,12 @@ app.use(
     secret: "secret_key",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false },
+    cookie: {
+      httpOnly: true,         // Prevents JS access to the cookie
+      sameSite: 'strict',     // Or 'lax' depending on your needs
+      secure: app.get('env') === 'production', // Only send over HTTPS in production
+      maxAge: 24 * 60 * 60 * 1000 // 1 day
+    },
   })
 );
 

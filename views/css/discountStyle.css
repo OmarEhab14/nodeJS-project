@@ -335,6 +335,10 @@ textarea:focus {
   width: 100%;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .edit-form-row > div {
   margin-bottom: 1rem;
 }
@@ -402,24 +406,30 @@ textarea:focus {
   transform: translateY(-1px);
 }
 
+.edit-section {
+  border-left: 1px solid var(--border-color);
+  padding-left: 15px;
+  margin-left: 10px;
+}
+
 /* Mobile responsiveness for edit form */
 @media (max-width: 768px) {
   .edit-form-buttons {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .edit-form-buttons button {
     width: 100%;
   }
-  
+
   /* Keep discount buttons horizontal on mobile */
   .discount-input {
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
   }
-  
+
   .discount-input form {
     width: auto;
   }
