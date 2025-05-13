@@ -1,5 +1,6 @@
 const Product = require("../models/product.model");
 const { showDiscount, calculateNewPrice } = require('../helpers/discount');
+const {formatProductTitle} = require('../helpers/home')
 
 const homePage = async (req, res) => {
   if (!req.session.user) {
@@ -18,6 +19,7 @@ const homePage = async (req, res) => {
       products: products,
       showDiscount,
       calculateNewPrice,
+      formatProductTitle,
     });
   } catch (error) {
     res.status(500).send("Error retrieving products");
@@ -25,11 +27,11 @@ const homePage = async (req, res) => {
 };
 
 const loginPage = (req, res) => {
-  res.render("../views/login.ejs");
+  res.render("../views/login.ejs",  { csrfToken: req.csrfToken() });
 };
 
 const registerPage = (req, res) => {
-  res.render("../views/register.ejs");
+  res.render("../views/register.ejs",  { csrfToken: req.csrfToken() });
 };
 
 const discountPage = async (req, res) => {
@@ -42,6 +44,7 @@ const discountPage = async (req, res) => {
     products: products,
     showDiscount,
     calculateNewPrice,
+    csrfToken: req.csrfToken()
   });
 };
 

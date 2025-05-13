@@ -4,9 +4,15 @@ const userModel = require('../models/user.model')
 const request = require('supertest')
 
 require('dotenv').config()
+let token;
+let csrfCookie;
 
 beforeEach(async () => {
     await mongoose.connect(process.env.connect_DB)
+    // Get CSRF token and cookie
+    const res = await request(app).get('/test-token');
+    token = res.body.csrfToken;
+    csrfCookie = res.headers['set-cookie'][0];
 })
 
 afterAll(async () => {
@@ -18,13 +24,14 @@ describe('get all users', () => {
     it('should return all users', async () => {
         const res = await request(app).get('/api/users');
         expect(res.status).toBe(200);
-    }),
-    it ('should return failure with status code 500', async () => {
+    });
+    
+    it('should return failure with status code 500', async () => {
         await mongoose.connection.close(); // we can do this or we can use mocking
         const res = await request(app).get('/api/users');
         expect(res.status).toBe(500);
         await mongoose.connect(process.env.connect_DB)
-    })
+    });
 })
 
 describe('get a user', () => {
@@ -42,32 +49,43 @@ describe('get a user', () => {
         const res = await request(app).get(`/api/users/${user._id}`)
         expect(res.status).toBe(200)
         expect(res.body.username).toBe("Omar")
-    }),
+    });
+    
     it('should return user not found', async () => {
         const res = await request(app).get(`/api/users/5050221`)
         expect(res.status).toBe(500)
-    })
+    });
 })
 
 describe('post a user', () => {
     it('should create a user', async () => {
-        const res = await request(app).post(`/api/users`).send({
-            firstName: "Samir",
-            lastName: "Mahmoud",
-            mobile: "01022255542",
-            gender: "male",
-            username: "Samir",
-            email: "samir@gmail.com",
-            password: "505050",
-            isTest: true,
-        })
+        const res = await request(app)
+            .post(`/api/users`)
+            .set('Cookie', csrfCookie)
+            .send({
+                _csrf: token,
+                firstName: "Samir",
+                lastName: "Mahmoud",
+                mobile: "01022255542",
+                gender: "male",
+                username: "Samir",
+                email: "samir@gmail.com",
+                password: "505050",
+                isTest: true,
+            });
         expect(res.status).toBe(200)
         expect(res.body.username).toBe("Samir")
-    }),
+    });
+    
     it('should fail to create a user', async () => {
-        const res = await request(app).post('/api/users');
+        const res = await request(app)
+            .post('/api/users')
+            .set('Cookie', csrfCookie)
+            .send({
+                _csrf: token
+            });
         expect(res.status).toBe(500)
-    })
+    });
 })
 
 describe('update a user', () => {
@@ -82,19 +100,24 @@ describe('update a user', () => {
             password: "123456",
             isTest: true,
         })
-        const res = await request(app).put(`/api/users/${user._id}`).send({
-            firstName: "Abdelrahman",
-            lastName: "Ali",
-            mobile: "01099665544",
-            gender: "male",
-            username: "Abdelrahman",
-            email: "abdelrahman@gmail.com",
-            password: "232323",
-            isAdmin: true,
-        })
+        const res = await request(app)
+            .put(`/api/users/${user._id}`)
+            .set('Cookie', csrfCookie)
+            .send({
+                _csrf: token,
+                firstName: "Abdelrahman",
+                lastName: "Ali",
+                mobile: "01099665544",
+                gender: "male",
+                username: "Abdelrahman",
+                email: "abdelrahman@gmail.com",
+                password: "232323",
+                isAdmin: true,
+            });
         expect(res.status).toBe(200)
         expect(res.body.username).toBe("Abdelrahman");
-    }),
+    });
+    
     it('should update a user without changing username (no username field)', async () => {
         const user = await userModel.create({
             firstName: "Karim",
@@ -107,18 +130,28 @@ describe('update a user', () => {
             isTest: true,
         });
     
-        const res = await request(app).put(`/api/users/${user._id}`).send({
-            firstName: "Kareem",
-        });
-    
+        const res = await request(app)
+            .put(`/api/users/${user._id}`)
+            .set('Cookie', csrfCookie)
+            .send({
+                _csrf: token,
+                firstName: "Kareem",
+            });
+        console.log(res.status)
+        console.log(res.body)
         expect(res.status).toBe(200);
         expect(res.body.firstName).toBe("Kareem");
         expect(res.body.username).toBe("Karim");
-    }),
+    });
+    
     it('should return user not found', async () => {
-        const res = await request(app).put(`/api/users/5d4f54d`).send({
-            password: "8855885",
-        })
+        const res = await request(app)
+            .put(`/api/users/5d4f54d`)
+            .set('Cookie', csrfCookie)
+            .send({
+                _csrf: token,
+                password: "8855885",
+            });
         expect(res.status).toBe(500)
     });
 })
@@ -135,11 +168,22 @@ describe('delete a user', () => {
             password: "505050",
             isTest: true,
         });
-        const res = await request(app).delete(`/api/users/${user._id}`);
+        const res = await request(app)
+            .delete(`/api/users/${user._id}`)
+            .set('Cookie', csrfCookie)
+            .send({
+                _csrf: token
+            });
         expect(res.status).toBe(200)
-    }),
+    });
+    
     it('should return user not found', async () => {
-        const res = await request(app).delete('/api/users/45544');
+        const res = await request(app)
+            .delete('/api/users/45544')
+            .set('Cookie', csrfCookie)
+            .send({
+                _csrf: token
+            });
         expect(res.status).toBe(500)
-    })
-})
+    });
+});

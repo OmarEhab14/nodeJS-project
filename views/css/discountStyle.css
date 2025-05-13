@@ -1,156 +1,436 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 20px;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --primary-color: #4a6cfa;
+  --primary-dark: #3a5ad9;
+  --secondary-color: #3d4a6a;
+  --danger-color: #ff5252;
+  --danger-dark: #e04646;
+  --success-color: #4caf50;
+  --success-dark: #3d9c40;
+  --bg-color: #f8f9fd;
+  --card-bg: #ffffff;
+  --text-primary: #2d3748;
+  --text-secondary: #718096;
+  --border-color: #e2e8f0;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --border-radius-sm: 6px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --transition: all 0.3s ease;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+  padding: 0;
+  margin: 0;
+}
+
+/* Navbar Styling */
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #ffffff;
-  padding: 10px 10px;
+  background-color: var(--card-bg);
+  padding: 0.8rem 2rem;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
-  height: 40px;
-  color: white;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-sm);
+  height: 60px;
 }
 
 .logo {
-  font-family: "Aref Ruqaa", Arial, sans-serif;
-  font-size: 24px;
-  font-weight: bold;
-  color: black;
-  margin-left: 30px;
-  text-decoration: none;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin: 0;
 }
 
 .user {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 1rem;
 }
 
 .username {
-  font-size: 14px;
-  margin-right: 10px;
-  color: #333;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
 }
 
 .logout-btn {
   text-decoration: none;
   color: white;
-  background-color: #ff3b3b;
-  padding: 8px 15px;
-  margin-right: 30px;
-  border-radius: 5px;
-  transition: 0.3s;
+  background-color: var(--danger-color);
+  padding: 0.4rem 1rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: var(--transition);
 }
 
 .logout-btn:hover {
-  background-color: #c9302c;
+  background-color: var(--danger-dark);
+  transform: translateY(-1px);
 }
 
-
-/* .nav-bar {
-  display: flex;
-  justify-content: space-between;
-} */
-
+/* Product Container */
 .discount-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  /* max-width: 900px; */
+  gap: 1.25rem;
   width: 90%;
-  margin: 0 auto;
-  margin-top: 60px;
+  max-width: 1200px;
+  margin: 80px auto 2rem;
+  padding: 1rem 0;
 }
 
-.product-discount {
-  color: #ff3b3b;
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
+/* Product Row */
 .product-row {
   display: flex;
-  align-items: center;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  gap: 20px;
-  height: 170px;
+  align-items: stretch;
+  background: var(--card-bg);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 1.25rem;
+  gap: 1.5rem;
+  min-height: 180px;
+  transition: var(--transition);
+  position: relative;
 }
 
+.product-row:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Product Image */
 .product-image {
-  width: 120px;
-  height: 170px;
+  width: 140px;
+  height: 180px;
   object-fit: cover;
-  border-radius: 8px;
-  flex-shrink: 0;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
 }
 
+/* Product Details */
 .product-details {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.5rem 0;
 }
 
 .product-title {
-  margin: 0;
-  font-size: 1.2em;
-  font-weight: bold;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.product-discount {
+  color: var(--danger-color);
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
 }
 
 .product-price {
-  color: #555;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
 }
 
+.product-price s {
+  margin-right: 0.5rem;
+  opacity: 0.7;
+}
+
+.product-price strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Discount Input Section */
 .discount-input {
-  margin-top: 10px;
+  margin-top: 0.5rem;
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
-input[type="number"] {
-  width: 200px;
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+.discount-input form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+input[type="number"],
+input[type="text"],
+textarea {
+  width: 160px;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color);
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(74, 108, 250, 0.1);
 }
 
 .apply-btn {
-  padding: 5px 12px;
-  background-color: #4caf50;
+  padding: 0.5rem 1rem;
+  background-color: var(--success-color);
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: var(--transition);
 }
 
 .apply-btn:hover {
-  background-color: #45a049;
+  background-color: var(--success-dark);
+  transform: translateY(-1px);
 }
 
 .remove-btn {
-  padding: 5px 12px;
-  background-color: #f44336;
+  padding: 0.5rem 1rem;
+  background-color: var(--danger-color);
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: var(--transition);
 }
 
 .remove-btn:hover {
-  background-color: #d32f2f;
+  background-color: var(--danger-dark);
+  transform: translateY(-1px);
 }
 
-html {
-  scroll-behavior: smooth;
+/* Remove Product Button */
+.remove-product {
+  display: flex;
+  align-items: flex-start;
+}
+
+.remove-product button {
+  border: none;
+  color: var(--text-secondary);
+  background-color: rgba(0, 0, 0, 0.03);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.remove-product button:hover {
+  cursor: pointer;
+  background-color: rgba(255, 82, 82, 0.1);
+  color: var(--danger-color);
+  transform: scale(1.1);
+}
+
+.remove-product i {
+  font-size: 1rem;
+}
+
+.edit-btn {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: var(--transition);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+
+  .product-row {
+    flex-direction: column;
+    height: auto;
+    align-items: flex-start;
+  }
+
+  .product-image {
+    width: 100%;
+    height: 200px;
+  }
+
+  .discount-input {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .discount-input form {
+    width: 100%;
+  }
+
+  input[type="number"] {
+    width: 100%;
+  }
+}
+
+/* Add this to your CSS file */
+
+/* Add this to your CSS file */
+
+/* Edit Form Styling */
+.product-row form.edit-form-row {
+  width: 100%;
+}
+
+/* Keep original forms (discount forms) displaying inline */
+.discount-input form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+#edit-form-container {
+  flex: 1;
+  width: 100%;
+}
+
+.edit-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.edit-form-row > div {
+  margin-bottom: 1rem;
+}
+
+.edit-form-row input,
+.edit-form-row textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color);
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.edit-form-row textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.edit-form-row input:focus,
+.edit-form-row textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(74, 108, 250, 0.1);
+}
+
+.edit-form-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.save-btn {
+  padding: 0.5rem 1.5rem;
+  background-color: var(--success-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.save-btn:hover {
+  background-color: var(--success-dark);
+  transform: translateY(-1px);
+}
+
+.cancel-btn {
+  padding: 0.5rem 1.5rem;
+  background-color: var(--text-secondary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.cancel-btn:hover {
+  background-color: var(--danger-color);
+  transform: translateY(-1px);
+}
+
+.edit-section {
+  border-left: 1px solid var(--border-color);
+  padding-left: 15px;
+  margin-left: 10px;
+}
+
+/* Mobile responsiveness for edit form */
+@media (max-width: 768px) {
+  .edit-form-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .edit-form-buttons button {
+    width: 100%;
+  }
+
+  /* Keep discount buttons horizontal on mobile */
+  .discount-input {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .discount-input form {
+    width: auto;
+  }
 }

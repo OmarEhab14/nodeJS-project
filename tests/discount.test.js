@@ -6,9 +6,15 @@ const request = require('supertest')
 const {showDiscount, calculateNewPrice} = require('../helpers/discount')
 
 require('dotenv').config()
+let token;
+let csrfCookie;
 
 beforeEach(async () => {
     await mongoose.connect(process.env.connect_DB)
+    // Get CSRF token and cookie
+    const res = await request(app).get('/test-token');
+    token = res.body.csrfToken;
+    csrfCookie = res.headers['set-cookie'][0];
 })
 
 afterAll(async () => {
@@ -24,29 +30,46 @@ describe('apply discount', () => {
             image: "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             isTest: true,
         });
-        const res = await request(app).post('/api/discount').send({
-            id: product._id,
-            discount: 20,
-        });
+        const res = await request(app)
+            .post('/api/discount')
+            .set('Cookie', csrfCookie)
+            .send({
+                _csrf: token,
+                id: product._id,
+                discount: 20,
+            });
         expect(res.status).toBe(302);
-    }),
-        it('should return apply discount failure', async () => {
-            const res = await request(app).post('/api/discount').send({
+    });
+
+    it('should return apply discount failure', async () => {
+        const res = await request(app)
+            .post('/api/discount')
+            .set('Cookie', csrfCookie)
+            .send({
+                _csrf: token,
                 id: "kdfjjdf",
                 // discount: 20
             });
-            expect(res.status).toBe(500);
-        })
-})
+        expect(res.status).toBe(500);
+    });
+});
 
 describe('displaying discount', () => {
-    it ('should return true to show the discount', () => {
+    it('should return true to show the discount', () => {
         expect(showDiscount(20)).toBeTruthy();
-    }),
-    it ('should return false when there is no discount', () => {
+    });
+    
+    it('should return false when there is no discount', () => {
         expect(showDiscount(0)).toBeFalsy();
-    })
-    it ('should return 80.00 when the discount is 20 and the price is 100', () => {
+    });
+});
+
+describe('calculating discount', () => {
+    it('should return 80.00 when the discount is 20 and the price is 100', () => {
         expect(calculateNewPrice(100, 20)).toBe("80.00");
-    })
-})
+    });
+    
+    it('should throw an error if the price was a negative number', () => {
+        expect(() => calculateNewPrice(-20, 20)).toThrow();
+    });
+});

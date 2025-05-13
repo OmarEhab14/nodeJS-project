@@ -3,24 +3,28 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
-    "test": "jest product user discount authentication pages --coverage"
+    "start": "nodemon server.js",
+    "test": "jest product user discount authentication pages home --coverage"
   },
   "author": "Omar Ehab",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "csurf": "^1.11.0",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
+    "helmet": "^8.1.0",
+    "method-override": "^3.0.0",
     "mongodb": "^6.15.0",
     "mongoose": "^8.12.1"
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "nodemon": "^3.1.9",
+    "nodemon": "^3.1.10",
     "supertest": "^7.1.0"
   }
 }

@@ -54,7 +54,8 @@ const updateProduct = async (req, res) => {
         },
             { new: true }, // added this to return the new object after updating, not the old one.
         );
-        res.status(200).json(product);
+        // res.status(200).json(product);
+        res.redirect('/discount')
     } catch (error) {
         res.status(500).json(error);
     }
@@ -64,7 +65,8 @@ const deleteProduct = async (req, res) => {
     try {
         const productId = req.params.id
         const product = await Products.deleteOne({ _id: productId })
-        res.status(200).json(product);
+        // res.status(200).json(product);
+        res.redirect('/discount')
     } catch (error) {
         res.status(500).json(error);
     }

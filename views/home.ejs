@@ -25,7 +25,7 @@
           alt="<%= product.title %>"
           class="product-image"
         />
-        <h3 class="product-title"><%= product.title %></h3>
+        <h3 class="product-title"><%= formatProductTitle(product.title) %></h3>
         <% if (showDiscount(product.discount)) { %>
           <p class="product-discount">Discount: <%= product.discount %>%</p>
           <p class="product-price">
