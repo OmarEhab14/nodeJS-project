@@ -38,21 +38,17 @@ describe('navigation of admin and normal users', () => {
     let agent;
     beforeAll(async () => {
         agent = request.agent(app);
-        // Get CSRF token and cookie for the agent
         const res = await agent.get('/test-token');
         token = res.body.csrfToken;
-        // The cookie is automatically stored in the agent
     })
 
     it('should navigate to discount manager page if the user is admin', async () => {
-        // Step 1: Establish session + get CSRF token from that session
         const tokenRes = await agent.get('/test-token');
         const token = tokenRes.body.csrfToken;
 
-        // Step 2: Register using the same agent + CSRF token
         const registerRes = await agent
             .post('/register')
-            .set('Cookie', tokenRes.headers['set-cookie']) // send cookies from /test-token
+            .set('Cookie', tokenRes.headers['set-cookie'])
             .send({
                 _csrf: token,
                 firstName: "Admin",
@@ -69,11 +65,9 @@ describe('navigation of admin and normal users', () => {
 
         expect(registerRes.status).toBe(302);
 
-        // Step 3: Get new CSRF token (same session)
         const loginTokenRes = await agent.get('/test-token');
         const loginToken = loginTokenRes.body.csrfToken;
 
-        // Step 4: Login
         const loginRes = await agent
             .post('/login')
             .set('Cookie', loginTokenRes.headers['set-cookie'])
@@ -85,17 +79,14 @@ describe('navigation of admin and normal users', () => {
 
         expect(loginRes.status).toBe(302);
 
-        // Step 5: Navigate to /home
         const homeRes = await agent.get('/home');
         expect(homeRes.header['location']).toBe('/discount');
 
-        // Step 6: Validate /discount page loads
         const discountRes = await agent.get('/discount');
         expect(discountRes.status).toBe(200);
     }),
 
         it('should navigate to the home page if the user is normal user', async () => {
-            // Get a new token before this request
             const tokenRes = await agent.get('/test-token');
             token = tokenRes.body.csrfToken;
 
@@ -132,7 +123,6 @@ describe('navigation of admin and normal users', () => {
         }),
 
         it('should redirect to the login page if the user is logged out from the system', async () => {
-            // Get a new token before logout
             const tokenRes = await agent.get('/test-token');
             token = tokenRes.body.csrfToken;
 
